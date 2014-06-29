@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+
+use 5.20.0;
+use strict;
+use warnings FATAL => 'all';
+
+use experimental 'signatures';
+use feature 'say';
+
+use IO::Async::Timer::Periodic;
+use IO::Async::Loop;
+
+use Getopt::Long;
+
+use Riemann::HostUp qw(ping_all_hosts);
+
+my $interval = 0; # seconds
+
+my $riemann_host = 'localhost';
+my $riemann_port = 5555;
+
+my $verbose = '';
+
+my @hosts;
+
+GetOptions ("interval=i" => \$interval,
+            "riemann_host=s" => \$riemann_host,
+            "riemann_port=i" => \$riemann_port,
+            "hosts=s" => \@hosts,
+            "verbose!" => \$verbose)
+    or die ("Error in command line arguments\n");
+@hosts = split(/,/,join(',', @hosts));
+
+say "Ping @hosts every $interval seconds\nSending output to $riemann_host:$riemann_port"
+    if $verbose;
+
+sub ping {
+    ping_all_hosts(
+        {
+            riemann_host => $riemann_host,
+            riemann_port => $riemann_port,
+        },
+        $verbose,
+        @hosts
+    );
+}
+
+ping();
+
+if ($interval > 0) {
+    my $loop = IO::Async::Loop->new;
+    my $timer = IO::Async::Timer::Periodic->new(
+        interval => $interval,
+        on_tick => sub {
+            ping();
+        },
+    );
+
+    $timer->start;
+    $loop->add( $timer );
+    $loop->run;
+}
