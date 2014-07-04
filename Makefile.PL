@@ -4,10 +4,10 @@ use warnings FATAL => 'all';
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME             => 'Riemann::HostUp',
+    NAME             => 'Riemann::Tools::HostUp',
     AUTHOR           => q{Andreas 'Kungi' Klein <perl@kungi.org>},
-    VERSION_FROM     => 'lib/Riemann/HostUp.pm',
-    ABSTRACT_FROM    => 'lib/Riemann/HostUp.pm',
+    VERSION_FROM     => 'lib/Riemann/Tools/HostUp.pm',
+    ABSTRACT_FROM    => 'lib/Riemann/Tools/HostUp.pm',
     LICENSE          => 'Artistic_2_0',
     PL_FILES         => {},
     MIN_PERL_VERSION => 5.20.0,
@@ -29,5 +29,5 @@ WriteMakefile(
     PREREQ_PM => {
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => 'Riemann-HostUp-*' },
+    clean => { FILES => 'Riemann-Tools-HostUp-*' },
 );

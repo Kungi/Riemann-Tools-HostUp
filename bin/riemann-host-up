@@ -12,7 +12,7 @@ use IO::Async::Loop;
 
 use Getopt::Long;
 
-use Riemann::HostUp qw(ping_all_hosts);
+use Riemann::Tools::HostUp qw(ping_all_hosts);
 
 my $interval = 0; # seconds
 

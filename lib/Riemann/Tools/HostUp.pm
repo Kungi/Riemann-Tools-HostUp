@@ -1,4 +1,4 @@
-package Riemann::HostUp;
+package Riemann::Tools::HostUp;
 
 require Exporter;
 @ISA = qw(Exporter);
