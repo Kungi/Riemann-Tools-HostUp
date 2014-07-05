@@ -94,11 +94,11 @@ riemann-host-up [options]
 
 =item B<-help>
 
-Print a brief help message and exits
+Print a brief help message and exit
 
 =item B<-man>
 
-Print the manual page and exits
+Print the manual page and exit
 
 =item B<-verbose>
 

@@ -5,9 +5,9 @@ SYNOPSIS
     riemann-host-up [options]
 
 OPTIONS
-    -help   Print a brief help message and exits
+    -help   Print a brief help message and exit
 
-    -man    Print the manual page and exits
+    -man    Print the manual page and exit
 
     -verbose
             Start ping in verbose mode (default: no)
