@@ -41,8 +41,8 @@ Perhaps a little code snippet.
 
 =cut
 
-sub ping_host ($host) {
-    my $p = Net::Ping->new('icmp');
+sub ping_host ($host, $ping_type) {
+    my $p = Net::Ping->new($ping_type);
     my $ping_ok = $p->ping($host);
     $p->close;
     return $ping_ok;
@@ -63,10 +63,10 @@ sub send_result_to_riemann ($conf, $host, $ping_ok) {
     });
 }
 
-sub ping_all_hosts ($conf, $verbose, @hosts) {
+sub ping_all_hosts ($conf, $ping_type, $verbose, @hosts) {
     foreach my $host (@hosts) {
 
-        my $ping_ok = ping_host($host);
+        my $ping_ok = ping_host($host, $ping_type);
 
         say "$host is up" if $verbose && $ping_ok;
         say "$host is down" if $verbose && !$ping_ok;
@@ -81,23 +81,11 @@ sub ping_all_hosts ($conf, $verbose, @hosts) {
 
 Andreas 'Kungi' Klein, C<< <perl at kungi.org> >>
 
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-riemann-hostup at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Riemann-HostUp>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
-
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc Riemann::HostUp
-
-
-You can also look for information at:
 
 =over 4
 
@@ -118,10 +106,6 @@ L<http://cpanratings.perl.org/d/Riemann-HostUp>
 L<http://search.cpan.org/dist/Riemann-HostUp/>
 
 =back
-
-
-=head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 

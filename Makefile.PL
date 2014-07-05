@@ -25,6 +25,7 @@ WriteMakefile(
         'Riemann::Client'            => 0,
         'IO::Async::Timer::Periodic' => 0,
         'IO::Async::Loop'            => 0,
+        'Pod::Usage'                 => 0,
     },
     PREREQ_PM => {
     },

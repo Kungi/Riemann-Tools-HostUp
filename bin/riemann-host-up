@@ -10,9 +10,13 @@ use feature 'say';
 use IO::Async::Timer::Periodic;
 use IO::Async::Loop;
 
+use Pod::Usage;
 use Getopt::Long;
 
 use Riemann::Tools::HostUp qw(ping_all_hosts);
+
+my $man = 0;
+my $help = 0;
 
 my $interval = 0; # seconds
 
@@ -20,15 +24,27 @@ my $riemann_host = 'localhost';
 my $riemann_port = 5555;
 
 my $verbose = '';
+my $ping_type = 'tcp';
 
 my @hosts;
 
-GetOptions ("interval=i" => \$interval,
-            "riemann_host=s" => \$riemann_host,
-            "riemann_port=i" => \$riemann_port,
-            "hosts=s" => \@hosts,
-            "verbose!" => \$verbose)
-    or die ("Error in command line arguments\n");
+if (scalar @ARGV == 0) {
+    pod2usage(1);
+}
+
+GetOptions ("interval=i"     => \$interval,
+            "riemann-host=s" => \$riemann_host,
+            "riemann-port=i" => \$riemann_port,
+            "hosts=s"        => \@hosts,
+            "verbose!"       => \$verbose,
+            "ping-type=s"    => \$ping_type,
+            "help|?"         => \$help,
+            "man"            => \$man);
+
+pod2usage(-exitval => 1, -verbose => 2) if $help;
+pod2usage(-exitval => 0, -verbose => 2) if $man;
+
+
 @hosts = split(/,/,join(',', @hosts));
 
 say "Ping @hosts every $interval seconds\nSending output to $riemann_host:$riemann_port"
@@ -40,6 +56,7 @@ sub ping {
             riemann_host => $riemann_host,
             riemann_port => $riemann_port,
         },
+        $ping_type,
         $verbose,
         @hosts
     );
@@ -60,3 +77,62 @@ if ($interval > 0) {
     $loop->add( $timer );
     $loop->run;
 }
+
+ __END__
+
+=head1 NAME
+
+riemann-host-up - Ping hosts and send status to Riemann
+
+=head1 SYNOPSIS
+
+riemann-host-up [options]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-help>
+
+Print a brief help message and exits.
+
+=item B<-man>
+
+Prints the manual page and exits.
+
+=item B<-verbose>
+
+Start ping in verbose mode
+
+=item B<-riemann-host>
+
+Hostname of the Riemann server (Default: localhost)
+
+=item B<-riemann-port>
+
+Port of the Riemann server (Default: 5555)
+
+=item B<-hosts>
+
+Array of hostnames to ping
+
+=item B<-interval>
+
+Interval between pings (Default: 0)
+If interval is 0 riemann-host-up pings once and then terminates.
+
+=item B<-ping-type>
+
+Possible values are: "tcp", "udp", "icmp", "stream", "syn" (Default: tcp)
+icmp needs root privileges.
+
+=back
+
+=head1 DESCRIPTION
+
+riemann-host-up pings hosts periodically and sends the result to the
+Riemann monitoring tool.
+
+The Riemann service flag is 'up'.
+
+=cut
