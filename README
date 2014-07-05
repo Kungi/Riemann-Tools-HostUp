@@ -5,28 +5,28 @@ SYNOPSIS
     riemann-host-up [options]
 
 OPTIONS
-    -help   Print a brief help message and exits.
+    -help   Print a brief help message and exits
 
-    -man    Prints the manual page and exits.
+    -man    Print the manual page and exits
 
     -verbose
-            Start ping in verbose mode
+            Start ping in verbose mode (default: no)
 
     -riemann-host
-            Hostname of the Riemann server (Default: localhost)
+            Hostname of the Riemann server (default: localhost)
 
     -riemann-port
-            Port of the Riemann server (Default: 5555)
+            Port of the Riemann server (default: 5555)
 
-    -hosts  Array of hostnames to ping
+    -hosts  Array of hostnames to ping (default: '')
 
     -interval
-            Interval between pings (Default: 0) If interval is 0
-            riemann-host-up pings once and then terminates.
+            Interval between pings (default: 0) If interval is 0
+            riemann-host-up pings once and then terminates
 
     -ping-type
             Possible values are: "tcp", "udp", "icmp", "stream", "syn"
-            (Default: tcp) icmp needs root privileges.
+            (default: tcp) icmp needs root privileges
 
 DESCRIPTION
     riemann-host-up pings hosts periodically and sends the result to the

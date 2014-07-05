@@ -94,37 +94,37 @@ riemann-host-up [options]
 
 =item B<-help>
 
-Print a brief help message and exits.
+Print a brief help message and exits
 
 =item B<-man>
 
-Prints the manual page and exits.
+Print the manual page and exits
 
 =item B<-verbose>
 
-Start ping in verbose mode
+Start ping in verbose mode (default: no)
 
 =item B<-riemann-host>
 
-Hostname of the Riemann server (Default: localhost)
+Hostname of the Riemann server (default: localhost)
 
 =item B<-riemann-port>
 
-Port of the Riemann server (Default: 5555)
+Port of the Riemann server (default: 5555)
 
 =item B<-hosts>
 
-Array of hostnames to ping
+Array of hostnames to ping (default: '')
 
 =item B<-interval>
 
-Interval between pings (Default: 0)
-If interval is 0 riemann-host-up pings once and then terminates.
+Interval between pings (default: 0)
+If interval is 0 riemann-host-up pings once and then terminates
 
 =item B<-ping-type>
 
-Possible values are: "tcp", "udp", "icmp", "stream", "syn" (Default: tcp)
-icmp needs root privileges.
+Possible values are: "tcp", "udp", "icmp", "stream", "syn" (default: tcp)
+icmp needs root privileges
 
 =back
 
